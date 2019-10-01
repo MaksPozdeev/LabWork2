@@ -12,8 +12,13 @@ public class Course {
         idCourseTotal = 0;
     }
 
+    private static void setIdCourseTotal(){
+        ++Course.idCourseTotal;
+    }
+
     public Course(String nameCourse, int durationCourse) {
-        idCourse = ++idCourseTotal;
+        setIdCourseTotal();
+        idCourse = idCourseTotal;
         this.nameCourse = nameCourse;
         this.durationCourse = durationCourse;
     }

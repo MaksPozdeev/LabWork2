@@ -24,13 +24,31 @@ public class Student  {
         averageMark = 0.0;
     }
 
+    private static void setIdStudent() {
+        ++Student.countStudents;
+    }
+
     public Student(String name, int selectedCurriculumId, LocalDate startDate) {
-        idStudent = ++countStudents;
+        setIdStudent();
+        idStudent = countStudents;
         this.name = name;
         this.selectedCurriculumId = selectedCurriculumId;
         this.startDate = startDate;
         marks = new ArrayList<>();
     }
+
+//    class TestClass {
+//
+//        static int testInt = 0 ;
+//
+//        public static setTestInt ( int a ) {
+//            TestClass.testInt = a ;
+//        }
+//
+//        public void setInt ( int a1 ) {
+//            setTestInt ( a1 );
+//        }
+//    }
 
     public int getId() {
         return idStudent;

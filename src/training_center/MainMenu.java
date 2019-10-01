@@ -3,11 +3,12 @@ package training_center;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class MainMenu {
     public static void main(String[] args) throws IOException {
         CreateData.generate();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader reader;
 
         while (true) {
             System.out.print("Выберете номер операции:\n" +
@@ -18,7 +19,15 @@ public class MainMenu {
                     "5. Выход \n" +
                     "> ");
 
-            String[] params = reader.readLine().trim().toLowerCase().split(" ");
+            try {
+            reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+            String stringParams = reader.readLine();
+            if (stringParams == null) {
+                System.out.println("Неверная комманда!");
+                continue;
+            }
+
+            String[] params = stringParams.trim().toLowerCase().split(" ");
             if (params.length < 1 || params.length > 2) {
                 System.out.println("Неверная команда.");
                 System.out.println();
@@ -46,6 +55,9 @@ public class MainMenu {
                 default:
                     System.out.println("Неверная команда.");
                     break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

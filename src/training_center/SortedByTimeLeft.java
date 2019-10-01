@@ -2,9 +2,10 @@ package training_center;
 
 import training_center.entities.Student;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
-public class SortedByTimeLeft implements Comparator<Student> {
+public class SortedByTimeLeft implements Comparator<Student>, Serializable {
 
     @Override
     public int compare(Student o1, Student o2) {

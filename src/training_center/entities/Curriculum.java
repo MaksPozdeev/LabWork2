@@ -13,15 +13,20 @@ public class Curriculum {
         idCurriculumTotal =0;
     }
 
+    private static void setIdCurriculumTotal() {
+        ++Curriculum.idCurriculumTotal;
+    }
+
     public Curriculum(String name, Set<Course> listCourses) {
-        idCurriculum = ++idCurriculumTotal;
+        setIdCurriculumTotal();
+        idCurriculum = idCurriculumTotal;
         this.name = name;
+        int timeCourses = 0;
         if (listCourses != null) {
             this.listCourses = listCourses;
-        }
-        int timeCourses = 0;
-        for (Course course: listCourses){
-            timeCourses += course.getDurationCourse();
+            for (Course course: listCourses){
+                timeCourses += course.getDurationCourse();
+             }
         }
         timeCurriculum = timeCourses;
     }

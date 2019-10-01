@@ -2,16 +2,13 @@ package training_center;
 
 import training_center.entities.Student;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
-public class SortedByAverageMark implements Comparator <Student> {
+public class SortedByAverageMark implements Comparator <Student>, Serializable {
 
     @Override
     public int compare(Student o1, Student o2) {
-        double result = o1.getAverageMark() - o2.getAverageMark();
-        System.out.println(result);
-        if (result > 0) return 1;
-        if (result < 0) return -1;
-        return 0;
+        return Integer.compare(Double.compare(o1.getAverageMark(), o2.getAverageMark()), 0);
     }
 }

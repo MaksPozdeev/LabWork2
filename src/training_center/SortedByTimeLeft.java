@@ -8,8 +8,8 @@ import java.util.Comparator;
 public class SortedByTimeLeft implements Comparator<Student>, Serializable {
 
     @Override
-    public int compare(Student o1, Student o2) {
-        int result = o1.getHourseLate() - o2.getHourseLate();
+    public int compare(Student student1, Student student2) {
+        int result = student1.getHoursLate() - student2.getHoursLate();
         return Integer.compare(result, 0);
     }
 }

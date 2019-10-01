@@ -7,13 +7,13 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student  {
+public class Student {
     private static int countStudents;
     private int idStudent;
-    private String name;
+    private String nameStudent;
     private int selectedCurriculumId;
-    private LocalDate startDate; //Дата получения задания
-    private List<Integer> marks; //Список оценок
+    private LocalDate curriculumStartDate;
+    private List<Integer> listMarks;
     private double averageMark;
 
     static {
@@ -28,94 +28,62 @@ public class Student  {
         ++Student.countStudents;
     }
 
-    public Student(String name, int selectedCurriculumId, LocalDate startDate) {
+    public Student(String nameStudent, int selectedCurriculumId, LocalDate curriculumStartDate) {
         setIdStudent();
         idStudent = countStudents;
-        this.name = name;
+        this.nameStudent = nameStudent;
         this.selectedCurriculumId = selectedCurriculumId;
-        this.startDate = startDate;
-        marks = new ArrayList<>();
+        this.curriculumStartDate = curriculumStartDate;
+        listMarks = new ArrayList<>();
     }
 
-//    class TestClass {
-//
-//        static int testInt = 0 ;
-//
-//        public static setTestInt ( int a ) {
-//            TestClass.testInt = a ;
-//        }
-//
-//        public void setInt ( int a1 ) {
-//            setTestInt ( a1 );
-//        }
-//    }
-
-    public int getId() {
+    public int getIdStudent() {
         return idStudent;
     }
 
-    public String getName() {
-        return name;
+    public String getNameStudent() {
+        return nameStudent;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getSelectedCurriculumId() {
+    private int getSelectedCurriculumId() {
         return selectedCurriculumId;
     }
 
-    public void setSelectedCurriculumId(int selectedCurriculumId) {
-        this.selectedCurriculumId = selectedCurriculumId;
+    private LocalDate getCurriculumStartDate() {
+        return curriculumStartDate;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public int getHourseLate() {
+    public int getHoursLate() {
         LocalDate now = LocalDate.now();
-        Period period = Period.between(getStartDate(), now);
+        Period period = Period.between(getCurriculumStartDate(), now);
         int daysPassed = period.getDays();
-        int hours = daysPassed*8;
+        int hours = daysPassed * 8;
         int programHours = CreateData.getCurriculumTotalTime(getSelectedCurriculumId());
         return programHours - hours;
     }
 
-    public void getMarks() {
-        if (marks == null) {
-            System.out.println("Оценок ещё нет, либо их просто не за что ставить )");
-        }
-        else {
-            System.out.println(marks.toString());
-        }
-    }
-
-    public void addMark(int mark){
-        if (marks == null) {
+    public void addMark(int mark) {
+        if (listMarks == null) {
             System.out.println("Not exist: " + getClass());
             return;
         }
-        if (mark <=5 && mark >=1) {
-            marks.add(mark);
-            averageMark = (double) getSumMarks()/(double) marks.size();
+        boolean markMaxValueOk = (mark <= 5);
+        boolean markMinValueOk = (mark >= 1);
+        if (markMaxValueOk && markMinValueOk) {
+            listMarks.add(mark);
+            averageMark = (double) getSumMarks() / (double) listMarks.size();
         } else {
             System.out.println("Оценка не входит в диапазон от 1 до 5");
         }
     }
 
-    private int getSumMarks(){
-        if (marks == null) {
+    private int getSumMarks() {
+        if (listMarks == null) {
             System.out.println("Not exist" + getClass());
             return -1;
         }
         int sumMark = 0;
-        for (Integer mark : marks) {
+        for (Integer mark : listMarks) {
             sumMark += mark;
         }
         return sumMark;
@@ -125,25 +93,24 @@ public class Student  {
         return averageMark;
     }
 
-    public void getAll(){
-        System.out.println("Students id: " + getId());
-        System.out.println("Name: " + getName());
-        System.out.println("SelectedCurriculumId: " + CreateData.getCurriculumName(getId()));
-        System.out.println("StartDate: " + getStartDate());
-        System.out.println("Marks: " + marks);
-        System.out.println("AverageMark: " + getAverageMark());
-        System.out.println("Time left: " + getHourseLate());
+    public String getAllStudentInfo() {
+        return "Students id: " + getIdStudent() + "\n" +
+                "Name: " + getNameStudent() + "\n" +
+                "SelectedCurriculumId: " + CreateData.getCurriculumName(getIdStudent()) + "\n" +
+                "StartDate: " + getCurriculumStartDate() + "\n" +
+                "Marks: " + listMarks + "\n" +
+                "AverageMark: " + String.format("%.2f", getAverageMark()) + "\n" +
+                "Time left: " + getHoursLate() + "\n";
 
-        System.out.println();
     }
 
     @Override
     public String toString() {
-        return"Student{" +
-                "name='" + name + '\'' +
+        return "Student{" +
+                "name='" + nameStudent + '\'' +
                 ", selectedCurriculumId=" + selectedCurriculumId +
-                ", startDate=" + startDate +
-                ", marks=" + marks +
+                ", startDate=" + curriculumStartDate +
+                ", marks=" + listMarks +
                 ", averageMark=" + String.format("%.2f", averageMark) +
                 '}';
     }

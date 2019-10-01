@@ -47,38 +47,33 @@ public class CreateData {
     private static Course course_9 = new Course(COURSE_NAME_9, COURSE_DURATION_9);
 
     //------------Объявление учебной программы------------------
-//  CURRICULUM_ID_1 = 1;
     private static final String CURRICULUM_NAME_1 = "J2EE Developer";
-
-//  CURRICULUM_ID_2 = 2;
     private static final String CURRICULUM_NAME_2 = "Java Developer";
 
-
     //------------Объявление студентов------------------
-    //    String name, int selectedCurriculumId, Date startDate, List<Integer> marks
     private static final String STUDENT_NAME_1 = "Ivanov Ivan";
-    private static final LocalDate START_DATE_1 = LocalDate.of(2019, 9 , 25);
+    private static final LocalDate START_DATE_1 = LocalDate.of(2019, 9, 25);
 
     private static final String STUDENT_NAME_2 = "Petrov Petr";
-    private static final LocalDate START_DATE_2 = LocalDate.of(2019, 9 , 23);
+    private static final LocalDate START_DATE_2 = LocalDate.of(2019, 9, 23);
 
     private static Student student1;
     private static Student student2;
 
     private static List<Curriculum> curriculumList;
 
-    public static String getCurriculumName(int id){
+    public static String getCurriculumName(int id) {
         String result = "";
-        for (Curriculum curriculum: curriculumList){
+        for (Curriculum curriculum : curriculumList) {
             if (curriculum.getId() == id)
-                result = curriculum.getName();
+                result = curriculum.getNameCurriculum();
         }
         return result;
     }
 
-    public static int getCurriculumTotalTime(int id){
+    public static int getCurriculumTotalTime(int id) {
         int time = 0;
-        for (Curriculum curriculum: curriculumList){
+        for (Curriculum curriculum : curriculumList) {
             if (curriculum.getId() == id)
                 time = curriculum.getTimeCurriculum();
         }
@@ -106,7 +101,6 @@ public class CreateData {
         curriculumList.add(curriculum1);
         curriculumList.add(curriculum2);
 
-//        public Student( String name, int selectedCurriculumId, Date startDate [,List<Integer> marks]) {
         student1 = new Student(STUDENT_NAME_1, 1, START_DATE_1);
         student1.addMark(3);
         student1.addMark(4);
@@ -126,38 +120,40 @@ public class CreateData {
         student2.addMark(5);
     }
 
-    static void listStudentsSortedByAvarageMarks(){
+    static void listStudentsSortedByAverageMarks() {
         Set<Student> students = new TreeSet<>(new SortedByAverageMark());
         students.add(student1);
         students.add(student2);
-        for (Student student: students){
-            student.getAll();
+        for (Student student : students) {
+            System.out.println(student.getAllStudentInfo());
         }
     }
 
-    static void listStudenstSortedByTimeLeft(){
+    static void listStudentsSortedByTimeLeft() {
         Set<Student> students = new TreeSet<>(new SortedByTimeLeft());
         students.add(student1);
         students.add(student2);
-        for (Student student: students){
-            student.getAll();
+        for (Student student : students) {
+            System.out.println(student.getAllStudentInfo());
         }
     }
 
-    static void listStatusStudents(){
+    static void listStatusStudents() {
         List<Student> students = new ArrayList<>();
         students.add(student1);
         students.add(student2);
-//        Ivanov Ivan - До окончания обучения по программе J2EE Developer осталось 6 ч. Средний балл 4.3. Отчислить
-        for (Student student: students) {
-            System.out.print(
-                    student.getName() + " - До окончания обучения по программе " + getCurriculumName(student.getId()) +
-                            " осталось " + student.getHourseLate() + " ч. Средний балл " + String.format("%.2f", student.getAverageMark()) + ". ");
-
-            if (student.getAverageMark() < 4.5 && student.getHourseLate() < 24)
+        for (Student student : students) {
+            System.out.print(student.getNameStudent() +
+                    " - До окончания обучения по программе " + getCurriculumName(student.getIdStudent()) +
+                    " осталось " + student.getHoursLate() + " ч." +
+                    " Средний балл " + String.format("%.2f", student.getAverageMark()) + ". ");
+            boolean averageMarkBad = student.getAverageMark() < 4.5;
+            boolean hoursLateLittle = student.getHoursLate() < 24;
+            if (averageMarkBad & hoursLateLittle) {
                 System.out.print("Отчислить");
-            else
+            } else {
                 System.out.println("Оставить");
+            }
         }
     }
 

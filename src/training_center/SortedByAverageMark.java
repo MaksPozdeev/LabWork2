@@ -5,10 +5,10 @@ import training_center.entities.Student;
 import java.io.Serializable;
 import java.util.Comparator;
 
-public class SortedByAverageMark implements Comparator <Student>, Serializable {
+public class SortedByAverageMark implements Comparator<Student>, Serializable {
 
     @Override
-    public int compare(Student o1, Student o2) {
-        return Integer.compare(Double.compare(o1.getAverageMark(), o2.getAverageMark()), 0);
+    public int compare(Student student1, Student student2) {
+        return Integer.compare(Double.compare(student1.getAverageMark(), student2.getAverageMark()), 0);
     }
 }

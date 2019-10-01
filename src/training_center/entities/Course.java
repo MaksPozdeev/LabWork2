@@ -12,7 +12,7 @@ public class Course {
         idCourseTotal = 0;
     }
 
-    private static void setIdCourseTotal(){
+    private static void setIdCourseTotal() {
         ++Course.idCourseTotal;
     }
 
@@ -23,31 +23,18 @@ public class Course {
         this.durationCourse = durationCourse;
     }
 
-    public int getId() {
-        return idCourse;
-    }
-
-
-    public String getNameCourse() {
-        return nameCourse;
-    }
-
-    public void setNameCourse(String nameCourse) {
-        this.nameCourse = nameCourse;
-    }
-
     int getDurationCourse() {
         return durationCourse;
     }
 
-    public void setDurationCourse(int durationCourse) {
-        this.durationCourse = durationCourse;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Course course = (Course) o;
         return idCourse == course.idCourse &&
                 durationCourse == course.durationCourse &&
